@@ -7,10 +7,10 @@ Library for popsauce @ jklm.fun.
 from popbot import *
 
 def playGame():
-    client = PopsauceClient("ken", "MHQX")
-    client.joinRoom()
-    client.sendChat("Bruh")
-    client.playRound()
+    client = PopsauceClient("ken", "MHQX") # username, roomCode
+    client.joinRoom()                      # Join room
+    client.sendChat("Bruh")                # Send message in chat
+    client.playRound()                     # Plays for your (answers)
 
 playGame()
 ```
