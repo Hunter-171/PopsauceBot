@@ -160,11 +160,3 @@ class PopsauceClient:
 
     def joinRoom(self):
         self.joinRoomCode(self.roomCode)
-
-def playGame():
-    client = PopsauceClient("ken", "JCCS")
-    client.joinRoom()
-    client.playRound()
-    client.joinRound()
-
-playGame()
