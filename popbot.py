@@ -1,4 +1,4 @@
-import requests, string, random, names, hashlib, json, time, math
+import requests, string, random, hashlib, json, time, math
 from websocket import WebSocket
 from threading import Thread
 
