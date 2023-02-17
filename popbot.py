@@ -80,6 +80,14 @@ class PopsauceClient:
             else:
                 msgDict = parse("["+msg.split("[",1)[1])
                 eventType = msgDict[0]
+                if(eventType == "chat"):
+                    sender = msgDict[1]["nickname"]
+                    message = msgDict[2]
+                    if(sender == self.username):continue
+                    self.handleChat(sender, message)
+
+    def handleChat(self, sender, message):
+        print(f"<{sender}> " + message)
 
     def connectToChat(self):
         ws = self.chatSocket
