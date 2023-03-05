@@ -199,7 +199,7 @@ class PopsauceClient:
                         if (answer is None) else
                         "✔️  > " + answer
                     )
-                    if (answer is None):
+                    if (answer is not None):
                         legitType(answer, ws)
             elif (eventType == "endChallenge"):
                 answer = msgDict[1]["source"]
