@@ -1,6 +1,10 @@
 # PopsauceBot
 Library for popsauce @ jklm.fun.
 
+### This repository is for educational purposes only.
+
+Answers will be updated every 1-2 weeks
+
 ## Usage
 
 ```python
