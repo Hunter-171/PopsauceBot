@@ -22,3 +22,6 @@ playGame()
 ## Videos
 [Example 1](https://www.youtube.com/watch?v=lXkM882SYpU)
 Javascript version that shows the answers for you when the question is clicked.
+
+## Project Ideas
+- ChatBot
