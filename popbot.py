@@ -178,6 +178,7 @@ class PopsauceClient:
                     )
                     if (answer is not None):
                         legitType(answer, ws)
+                    expectingImage = False # reset expectingImage after image challenge
                     continue
             msgDict = parse("["+msg.split("[", 1)[1])
             eventType = msgDict[0]
