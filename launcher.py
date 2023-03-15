@@ -14,7 +14,8 @@ if __name__ == "__main__":
     print()
     print("Do \"/join\" to join the game!")
     print("Do \"/play\" to start playing!")
-    print("Do \"/answer\" to answer!")
+    print("Do \"/answer <input>\" to answer!")
+    print("e.g \"/answer Python\"")
     print()
 
     playing = False
