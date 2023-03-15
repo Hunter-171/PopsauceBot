@@ -6,19 +6,28 @@ Library for popsauce @ jklm.fun.
 Answers will be updated every 1-2 weeks
 
 ## Usage
-edit launcher.py
 
-edit the line: client = PopsauceClient("Mr.nobody", "PBKZ")
+```python
+from popbot import *
 
-replace Mr.nobody with the name you want and PBKZ with the room code
+def handleChat(sender, message, ws):
+    PopsauceClient.handleChat(sender, message) # You get the sender, message and websocket
 
-save then run launcher.py
+def handleAnswer(answer, ws):
+    PopsauceClient.instantType(answer, ws)     # You get the answer and the websocket
 
-you can type messages in cmd, and when you want the bot to start guessing, you type: play
+def playGame():
+    client = PopsauceClient("Ken Miles", "DMJM", handleChat, handleAnswer)  # username, roomCode
+    client.joinRoom()                      # Join room
+    client.sendChat("Bruh")                # Send message in chat
+    client.joinRound()                     # Joins the round
+    client.playRound()                     # Plays for your (answers)
 
-when the game ends and you want the bot to reparticipate in the same game, type: join
+playGame()
+```
 
-! after you type, play , so that the bot to starts guessing you can't type messages only after it finishes the game
+## Quick Start
+Running `launcher.py` will allow you to play the game from the console.
 
 ## Videos
 [Example 1](https://www.youtube.com/watch?v=lXkM882SYpU)
