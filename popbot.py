@@ -30,19 +30,6 @@ def getWebSocketUrl(roomCode):
     return r.json()["url"].split("//")[1]
 
 
-def legitType(word, ws):
-    out = ""
-    time.sleep(0.6+max(random.random(), 0.6)/2)
-    for char in word:
-        out += char
-        if (len(out) % math.ceil(len(word)/4) != 0):
-            continue
-        sendRecv(ws, '42["submitGuess","'+out+'"]')
-        time.sleep(max(random.random(), 0.5)/5)
-    time.sleep(0.6+max(random.random(), 0.6)/3)
-    sendRecv(ws, '42["submitGuess","'+out+'"]')
-
-
 def sendRecv(ws, data):
     ws.send(data)
     return ws.recv()
@@ -78,7 +65,9 @@ class BannedFromRoom(Exception):
 
 
 class PopsauceClient:
-    def __init__(self, username, roomCode):
+    def __init__(self, username, roomCode, chatHandler, answerHandler):
+        self.answerHandler = answerHandler
+        self.chatHandler = chatHandler
         self.username = username
         self.roomCode = roomCode
         self.userToken = "".join(
@@ -113,7 +102,7 @@ class PopsauceClient:
                     message = msgDict[2]
                     if (sender == self.username):
                         continue
-                    self.handleChat(sender, message)
+                    self.chatHandler(self, sender, message, ws)
 
     def handleChat(self, sender, message):
         print(f"<{sender}> " + message)
@@ -177,8 +166,7 @@ class PopsauceClient:
                         "✔️  > " + answer
                     )
                     if (answer is not None):
-                        legitType(answer, ws)
-                    expectingImage = False # reset expectingImage after image challenge
+                        self.answerHandler(answer, ws)
                     continue
             msgDict = parse("["+msg.split("[", 1)[1])
             eventType = msgDict[0]
@@ -201,7 +189,7 @@ class PopsauceClient:
                         "✔️  > " + answer
                     )
                     if (answer is not None):
-                        legitType(answer, ws)
+                        self.answerHandler(answer, ws)
             elif (eventType == "endChallenge"):
                 answer = msgDict[1]["source"]
                 if (challengeHash != ""):
@@ -221,8 +209,32 @@ class PopsauceClient:
         print("🔌 > Connecting to game...")
         self.connectToGame()
         print("💡 > Connected to game...")
-        self.joinRound()
-        print("⚡ > Joined round...")
 
     def joinRoom(self):
         self.joinRoomCode(self.roomCode)
+
+    def legitType(word, ws):
+        out = ""
+        time.sleep(0.6+max(random.random(), 0.6)/2)
+        for char in word:
+            out += char
+            if (len(out) % math.ceil(len(word)/4) != 0): continue
+            time.sleep(max(random.random(), 0.5)/5)
+        time.sleep(0.6+max(random.random(), 0.6)/2)
+        sendRecv(ws, '42["submitGuess","'+out+'"]')
+
+
+    def blatantType(word, ws):
+        out = ""
+        time.sleep(0.6+max(random.random(), 0.6)/2)
+        for char in word:
+            out += char
+            if (len(out) % math.ceil(len(word)/4) != 0):continue
+            sendRecv(ws, '42["submitGuess","'+out+'"]')
+            time.sleep(max(random.random(), 0.5)/5)
+        time.sleep(0.6+max(random.random(), 0.6)/3)
+        sendRecv(ws, '42["submitGuess","'+out+'"]')
+
+
+    def instantType(self, word, ws):
+        sendRecv(ws, '42["submitGuess","'+word+'"]')
