@@ -1,31 +1,55 @@
 from popbot import PopsauceClient
+from threading import Thread
+
+def handleChat(client, sender, message):
+    PopsauceClient.handleChat(client, sender, message)
+
+def handleAnswer(answer, ws):
+    print()
 
 if __name__ == "__main__":
-    client = PopsauceClient("Mr.nobody", "PBKZ")
+    client = PopsauceClient(input("Username: "), input("Room Code: "), handleChat, handleAnswer)
     client.joinRoom()
 
+    print()
+    print("Do \"/join\" to join the game!")
+    print("Do \"/play\" to start playing!")
+    print("Do \"/answer\" to answer!")
+    print()
+
+    playing = False
+
+    def playRound(client):
+        global playing
+        if playing:
+            print("Already playing...")
+            return
+        print("Started playing...")
+        playing = True
+        client.playRound()
+        print("Finished playing...")
+        playing = False
+
+    def play(client):
+        th = Thread(target=playRound, args=[client])
+        th.start()
+
     while True:
-        # Get user input for command
-        print("For commands, type help")
-        Input = input(" ")
-        
-        if Input == "play":
+        # Get user input for message to send
+        message = input()
+
+        if message.lower() == "/play":
             # Play a round
-            client.playRound()
-            
-        elif Input == "help":
-            # Display commands and help
-            print("play -- Play a round of Popsauce")
-            print("join -- Join a room of Popsauce")
-            print("message -- After type in message when promted to send in chat")
-            
-        elif Input == "join":
-            # Join room
+            play(client)
+        elif message.lower() == "/join":
+            # Join round
+            print("Joined round")
             client.joinRound()
-            
-        elif Input == "message":
-            msg = input("Enter message to send: ")
-            client.sendChat(msg)
-        
+        elif message.lower().split(" ")[0] == "/answer":
+            # Answer With User Input
+            client.instantType(message.split(" ",1)[1], client.gameSocket)
         else:
-            print("'"+Input+"' is not a recognized command.")
+            # Send chat message
+            print(message.lower().split(" ")[0])
+            client.sendChat(message)
+            
