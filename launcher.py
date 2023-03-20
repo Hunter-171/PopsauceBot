@@ -17,6 +17,8 @@ if __name__ == "__main__":
     print("Do \"/answer <input>\" to answer!")
     print("e.g \"/answer Python\"")
     print()
+    print("Everything else will be sent to the chat.")
+    print()
 
     playing = False
 
