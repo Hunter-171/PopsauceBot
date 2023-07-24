@@ -1,3 +1,9 @@
+# NOTICE
+### Development on PopsauceBot has been paused temporarily
+We regret to inform you that the development of PopsauceBot is currently on hold. This decision comes as a result of recent changes to the web environment that have been made by JKLM, this package no longer works as it fails to connect to the sockets properly without the ReCaptcha token. 
+
+I cannot confirm that I will return to PopsauceBot due to other projects needing my attention, but I remain hopeful about its future development. I encourage and welcome pull requests, each submitted pull request will be reviewed and if deemed good enough will be merged.
+
 # PopsauceBot
 Library for popsauce @ jklm.fun.
 
